@@ -75,7 +75,7 @@ while attempts < 9:
 
     # Check username and password
     os.system('cls')
-    if(hmac.compare_digest(password, password_hash) and hmac.compare_digest(password, password_hash)):
+    if(hmac.compare_digest(username, username_hash) and hmac.compare_digest(password, password_hash)):
         cprint("Login Successful", "green")
         time.sleep(3)
         break
