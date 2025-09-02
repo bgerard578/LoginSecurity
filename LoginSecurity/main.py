@@ -1,8 +1,16 @@
 #   Brady Gerard
 #   8/29
+#   ****************************************************************
 #   Secure login program. Uses set username and password
 #   Username: Jimbo
 #   Password: P4LmTR3E!!!!!!!
+#   
+#   This login uses sha256 hashing and doesn't have salt. It would be more
+#       secure if a different algorithm (such as bcrypt which has built in 
+#       salt) was used.
+#   This was attempted but I strugled to get bcrypt to work for this program
+#       and desided to just leave it as sha256.
+#   ****************************************************************
 
 from sha256py import Sha256
 import os
@@ -15,8 +23,10 @@ import string
 
 # Alows for limiting the size of user input
 # This section aided by ChatGPT
-# "how to stop users from inputing too many characters in python" "how to stop users from inputing certain charaters"
-# Code produced by the two prompts were combined and altered to work for this situation
+#   "how to stop users from inputing too many characters in python" 
+#   "how to stop users from inputing certain charaters"
+#   Code produced by the two prompts were combined and altered to work for
+#   this situation
 ALLOWED_CHARS = string.ascii_letters + string.digits + "_" + "!" + "@" + "#" + "$" + "*"
 
 def get_filtered_input(prompt, max_length):
@@ -41,6 +51,9 @@ def get_filtered_input(prompt, max_length):
     return ''.join(input_chars)
 
 # Hashes
+# For an actuall login, you would want to store the hashes in a seperate 
+#   privat and encrypted file so that individuals can't look at the code
+#   and see what they are comparing it to 
 username_hash = "1d078c5ead2dd5e262fab30187c07b3894fac0151d511bf8724c801ada620ec8"
 password_hash = "9b9a99fe072d11f5614d1edbf4f52cfe697b2215c4d72dc192c143d0ec560530"
 
@@ -72,6 +85,11 @@ while attempts < 9:
     time.sleep(2)
 
     # Time out for too many attempts
+    # For an actuall login, you would want to either store cookies on an
+    #   individuals computer or store the time that they can next attempt
+    #   a login in a seperate file (potentaly the same one as for hashes).
+    #   This allows for the time out to persist instead of being reset on
+    #   program restart
     os.system('cls')
     if(attempts == 3):
         cprint("Try Again in 5 Minuts", "red")
